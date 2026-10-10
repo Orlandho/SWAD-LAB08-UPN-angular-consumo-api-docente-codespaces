@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter, ActivatedRoute } from '@angular/router';
+import { throwError } from 'rxjs';
+import { vi } from 'vitest';
 import { ProductoForm } from './producto-form';
 import { ProductoService } from '../../services/producto';
 
@@ -59,5 +61,25 @@ describe('ProductoForm Component (SWAD Lab 08)', () => {
     });
 
     expect(component.form.valid).toBe(true);
+  });
+
+  it('debe manejar error al guardar y actualizar estado y mensaje', () => {
+    const service = TestBed.inject(ProductoService);
+    const spy = vi.spyOn(service, 'registrar').mockReturnValue(
+      throwError(() => ({ status: 500 }))
+    );
+
+    component.form.patchValue({
+      nombre: 'Monitor 4K',
+      precio: 2500,
+      stock: 5
+    });
+
+    component.guardar();
+    fixture.detectChanges();
+
+    expect(spy).toHaveBeenCalled();
+    expect(component.guardando).toBe(false);
+    expect(component.mensaje).toContain('HTTP 500');
   });
 });

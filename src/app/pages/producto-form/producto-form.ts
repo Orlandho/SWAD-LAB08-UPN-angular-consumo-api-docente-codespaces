@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -17,6 +17,7 @@ export class ProductoForm implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private productoService = inject(ProductoService);
+  private cdr = inject(ChangeDetectorRef);
 
   id?: number;
   editando = false;
@@ -41,9 +42,11 @@ export class ProductoForm implements OnInit {
             precio: p.precio,
             stock: p.stock
           });
+          this.cdr.markForCheck();
         },
         error: err => {
           this.mensaje = `Error al cargar producto (HTTP ${err?.status ?? '404'}): recurso no encontrado`;
+          this.cdr.markForCheck();
         }
       });
     }
@@ -67,11 +70,13 @@ export class ProductoForm implements OnInit {
     peticion.subscribe({
       next: () => {
         this.guardando = false;
+        this.cdr.markForCheck();
         this.router.navigate(['/productos']);
       },
       error: err => {
         this.guardando = false;
         this.mensaje = `Error al guardar en backend: HTTP ${err?.status ?? 'Fallo'}`;
+        this.cdr.markForCheck();
       }
     });
   }
