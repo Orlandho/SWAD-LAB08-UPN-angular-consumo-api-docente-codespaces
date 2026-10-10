@@ -9,16 +9,37 @@ import { environment } from '../../environments/environment';
 })
 export class ProductoService {
 
-  private apiUrl = environment.apiUrl || 'http://localhost:8080/api/productos';
+  public static readonly DOCENTE_URL =
+    'https://glorious-spork-747q6qvw9g4hr5x7-8080.app.github.dev/api/productos';
+  public static readonly LOCAL_URL = 'http://localhost:8080/api/productos';
+  private readonly STORAGE_KEY = 'swad_lab08_api_url';
 
-  constructor(private http: HttpClient) {}
+  private apiUrl: string;
+
+  constructor(private http: HttpClient) {
+    const guardada = typeof window !== 'undefined' ? localStorage.getItem(this.STORAGE_KEY) : null;
+    this.apiUrl = guardada || environment.apiUrl || ProductoService.DOCENTE_URL;
+  }
 
   getUrl(): string {
     return this.apiUrl;
   }
 
   setUrl(url: string): void {
-    this.apiUrl = url;
+    const limpia = url.trim();
+    if (limpia) {
+      this.apiUrl = limpia;
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(this.STORAGE_KEY, limpia);
+      }
+    }
+  }
+
+  restablecerUrlPredeterminada(): void {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(this.STORAGE_KEY);
+    }
+    this.apiUrl = environment.apiUrl || ProductoService.DOCENTE_URL;
   }
 
   listar(): Observable<Producto[]> {

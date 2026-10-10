@@ -25,6 +25,37 @@ En sistemas corporativos modernos desacoplados, el frontend debe actuar como un 
 
 El siguiente diagrama ilustra la arquitectura de componentes Standalone en el frontend, el flujo de llamadas HTTP a traves del Data Service y su enlace con la API RESTful de Spring Boot:
 
+```mermaid
+graph TD
+    subgraph Frontend["Frontend Angular SPA (Standalone + Signals)"]
+        Navbar["Navbar Component (Configuración Dinámica de URL)"]
+        Catalogo["Catalogo Component (Listado, Búsqueda, Eliminación)"]
+        ProductoForm["ProductoForm Component (Formulario Reactivo POST/PUT)"]
+        Signals["Manejo de Estado Reactivo (Angular Signals)"]
+        DataService["ProductoService (Capa Centralizada de Acceso a Datos)"]
+        Interceptor["authInterceptor (HttpInterceptorFn / Bearer JWT)"]
+        HttpClient["HttpClient Module (RxJS Observables)"]
+
+        Catalogo --> Signals
+        Catalogo --> DataService
+        ProductoForm --> DataService
+        DataService --> Interceptor
+        Interceptor --> HttpClient
+    end
+
+    subgraph Backend["Backend RESTful (Spring Boot 3.4.3)"]
+        Gateway["Controlador REST (/api/productos)"]
+        Service["ProductoService (Lógica de Negocio y Métricas)"]
+        Repo["ProductoRepository (Spring Data JPA)"]
+        DB[("MySQL 8 Database")]
+
+        HttpClient -->|Peticiones HTTP/JSON| Gateway
+        Gateway --> Service
+        Service --> Repo
+        Repo --> DB
+    end
+```
+
 ![Diagrama de Arquitectura de Integracion](mermaid%20diagramas/arquitectura.svg)
 
 ---

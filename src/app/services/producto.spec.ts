@@ -101,4 +101,17 @@ describe('ProductoService (SWAD Lab 08)', () => {
     expect(req.request.method).toBe('GET');
     req.flush([mockProductos[1]]);
   });
+
+  it('setUrl() debe persistir la nueva URL en localStorage', () => {
+    service.setUrl('http://localhost:8080/api/productos');
+    expect(service.getUrl()).toBe('http://localhost:8080/api/productos');
+    expect(localStorage.getItem('swad_lab08_api_url')).toBe('http://localhost:8080/api/productos');
+  });
+
+  it('restablecerUrlPredeterminada() debe limpiar el almacenamiento y restaurar endpoint por defecto', () => {
+    service.setUrl('http://custom-api:9000/api/productos');
+    service.restablecerUrlPredeterminada();
+    expect(localStorage.getItem('swad_lab08_api_url')).toBeNull();
+    expect(service.getUrl()).toBe(ProductoService.DOCENTE_URL);
+  });
 });

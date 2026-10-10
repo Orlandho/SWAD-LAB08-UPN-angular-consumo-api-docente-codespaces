@@ -123,4 +123,50 @@
       </div>
     }
   }
+
+  <!-- Registro de Códigos HTTP del Protocolo REST (Actividad Autónoma A5) -->
+  <div class="card border-0 shadow-sm mt-4">
+    <div class="card-header bg-light py-2 px-3 d-flex justify-content-between align-items-center">
+      <span class="fw-semibold small text-muted">Actividad Autónoma A5 · Registro de Códigos de Estado HTTP Observados</span>
+      <span class="badge bg-secondary small">Protocolo REST / DevTools</span>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-sm table-striped align-middle mb-0 small">
+        <thead class="table-light">
+          <tr>
+            <th style="width: 120px;">Código HTTP</th>
+            <th style="width: 140px;">Operación / Verbo</th>
+            <th style="width: 200px;">Endpoint / Contexto</th>
+            <th>Interpretación Técnica Observada en Práctica</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge bg-success">200 OK</span></td>
+            <td><code>GET</code> / <code>PUT</code></td>
+            <td><code>/api/productos</code>, <code>/:id</code></td>
+            <td>Consulta de catálogo exitosa o actualización confirmada de atributos existentes.</td>
+          </tr>
+          <tr>
+            <td><span class="badge bg-primary">201 Created</span></td>
+            <td><code>POST</code></td>
+            <td><code>/api/productos</code></td>
+            <td>Producto registrado exitosamente en MySQL con cabecera Location y nuevo ID generado.</td>
+          </tr>
+          <tr>
+            <td><span class="badge bg-info text-dark">204 No Content</span></td>
+            <td><code>DELETE</code></td>
+            <td><code>/api/productos/:id</code></td>
+            <td>Eliminación física completada satisfactoriamente; el cuerpo de respuesta es vacío.</td>
+          </tr>
+          <tr>
+            <td><span class="badge bg-danger">404 Not Found</span></td>
+            <td><code>GET</code> / <code>PUT</code> / <code>DELETE</code></td>
+            <td><code>/api/productos/99999</code></td>
+            <td>Identificador inexistente o previamente eliminado en la base de datos.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

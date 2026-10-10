@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:8080/api/productos'
+  apiUrl: 'https://glorious-spork-747q6qvw9g4hr5x7-8080.app.github.dev/api/productos'
 };
