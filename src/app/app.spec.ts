@@ -23,9 +23,10 @@ describe('App Root Component (SWAD Lab 08 V3)', () => {
     fixture.detectChanges();
   });
 
-  it('debe crearse correctamente e inicializar totalProductos en 0', () => {
+  it('debe crearse correctamente e inicializar totalProductos y totalStockBajo en 0', () => {
     expect(component).toBeTruthy();
     expect(component.totalProductos).toBe(0);
+    expect(component.totalStockBajo).toBe(0);
   });
 
   it('debe renderizar el componente encabezado con titulo de catalogo', () => {

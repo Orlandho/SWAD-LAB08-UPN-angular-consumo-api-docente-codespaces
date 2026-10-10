@@ -12,11 +12,12 @@ graph TD
         HttpClient["HttpClient Module (RxJS Observables)"]
 
         AppRoot --> Navbar
-        AppRoot --> Encabezado
+        AppRoot -->|Inputs reactivos| Encabezado
         AppRoot --> RouterOutlet
         RouterOutlet -->|/productos| Catalogo
         RouterOutlet -->|/productos/nuevo| ProductoForm
         RouterOutlet -->|/productos/editar/:id| ProductoForm
+        Catalogo -.->|Sincroniza métricas| AppRoot
         Catalogo --> Signals
         Catalogo --> DataService
         ProductoForm --> DataService

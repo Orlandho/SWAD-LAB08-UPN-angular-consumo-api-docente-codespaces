@@ -57,6 +57,18 @@ describe('Catalogo Component (SWAD Lab 08 V3)', () => {
 
     expect(component.productos().length).toBe(0);
     expect(component.cargando()).toBe(false);
-    expect(component.error()).toContain('Error HTTP 500');
+    expect(component.error()).toContain('Error HTTP: 500');
+  });
+
+  it('cargarProductos() debe actualizar métricas en App shell si está presente en el árbol', () => {
+    const mockApp = { totalProductos: 0, totalStockBajo: 0 } as any;
+    (component as any).app = mockApp;
+    // @ts-ignore
+    productoService.listar = () => of(mockLista);
+
+    component.cargarProductos();
+
+    expect(mockApp.totalProductos).toBe(2);
+    expect(mockApp.totalStockBajo).toBe(1);
   });
 });

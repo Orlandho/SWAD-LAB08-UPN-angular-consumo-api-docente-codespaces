@@ -12,4 +12,5 @@ import { Encabezado } from './components/encabezado/encabezado';
 })
 export class App {
   totalProductos = 0;
+  totalStockBajo = 0;
 }

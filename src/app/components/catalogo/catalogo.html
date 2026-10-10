@@ -91,13 +91,13 @@
                     </span>
                   </td>
                   <td>
-                    @if (p.estadoStock === 'OK' || (p.stock !== undefined && p.stock >= 5)) {
+                    @if (p.estadoStock ? p.estadoStock === 'OK' : (p.stock !== undefined && p.stock >= 5)) {
                       <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">
-                        OK
+                        {{ p.estadoStock || 'OK' }}
                       </span>
                     } @else {
                       <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1">
-                        INSUFICIENTE
+                        {{ p.estadoStock || 'INSUFICIENTE' }}
                       </span>
                     }
                   </td>

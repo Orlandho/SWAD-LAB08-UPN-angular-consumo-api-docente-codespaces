@@ -34,7 +34,7 @@ La versión V3 oficial corregida emitida por la cátedra introdujo precisiones a
 | **Inyección en Formulario Reactivo** | Declaración en constructor susceptible al error `TS2729 fb used before initialization`. | **Paso 12 / Sección XI**: Uso estricto de la función `inject()` de `@angular/core` para inicializar `FormBuilder`, `ActivatedRoute`, `Router` y `ProductoService`. | Cumplido al 100%. Implementado con `inject()` y detección de cambios adaptada para Zoneless (`ChangeDetectorRef`). |
 | **Modelo de Datos Producto** | Definición con `id` y `estadoStock` obligatorios que rompía operaciones POST. | **Paso 5 / Sección XI**: `id?: number` y `estadoStock?: string` deben ser opcionales, ya que el ID lo genera MySQL y `estadoStock` es calculado por el backend. | Cumplido al 100%. `Producto` en `src/app/models/producto.ts` cumple rigurosamente con atributos opcionales. |
 | **Configuración CORS en Backend** | Errores `Error HTTP: 0` reportados por bloqueos Cross-Origin desde Codespaces. | **Sección XII**: Inclusión de guía para el docente con `allowedOriginPatterns("https://*.app.github.dev")` y métodos `GET, POST, PUT, DELETE, OPTIONS`. | Cumplido al 100%. Documentado y contemplado en el interceptor y conmutador dinámico de entorno. |
-| **Pruebas de Verificación CRUD** | Pruebas libres no estandarizadas. | **Sección X / XV**: Matriz formal de 6 pruebas funcionales con códigos esperados (`200 OK`, `201 Created`, `204 No Content`, `404 Not Found`). | Cumplido al 100%. Reflejado en matriz funcional y validado con 21 pruebas unitarias herméticas. |
+| **Pruebas de Verificación CRUD** | Pruebas libres no estandarizadas. | **Sección X / XV**: Matriz formal de 6 pruebas funcionales con códigos esperados (`200 OK`, `201 Created`, `204 No Content`, `404 Not Found`). | Cumplido al 100%. Reflejado en matriz funcional y validado con 23 pruebas unitarias herméticas. |
 
 ---
 
@@ -57,11 +57,12 @@ graph TD
         HttpClient["HttpClient Module (RxJS Observables)"]
 
         AppRoot --> Navbar
-        AppRoot --> Encabezado
+        AppRoot -->|Inputs reactivos| Encabezado
         AppRoot --> RouterOutlet
         RouterOutlet -->|/productos| Catalogo
         RouterOutlet -->|/productos/nuevo| ProductoForm
         RouterOutlet -->|/productos/editar/:id| ProductoForm
+        Catalogo -.->|Sincroniza métricas| AppRoot
         Catalogo --> Signals
         Catalogo --> DataService
         ProductoForm --> DataService
@@ -244,12 +245,12 @@ Resultado verificado con Vitest y Angular Testing Library:
 ✓  src/app/components/encabezado/encabezado.spec.ts (2 tests)
 ✓  src/app/services/producto.spec.ts (9 tests)
 ✓  src/app/app.spec.ts (2 tests)
-✓  src/app/components/catalogo/catalogo.spec.ts (3 tests)
-✓  src/app/pages/producto-form/producto-form.spec.ts (3 tests)
+✓  src/app/pages/producto-form/producto-form.spec.ts (4 tests)
+✓  src/app/components/catalogo/catalogo.spec.ts (4 tests)
 
 Test Files  6 passed (6)
-     Tests  21 passed (21)
-  Duration  5.03s
+     Tests  23 passed (23)
+  Duration  5.31s
 ```
 
 ---

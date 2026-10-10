@@ -26,7 +26,7 @@ export class ProductoForm implements OnInit {
 
   form = this.fb.nonNullable.group({
     nombre: ['', [Validators.required, Validators.minLength(3)]],
-    precio: [0, [Validators.required, Validators.min(0.01), Validators.max(50000)]],
+    precio: [0, [Validators.required, Validators.min(0.01)]],
     stock: [0, [Validators.required, Validators.min(0)]]
   });
 
@@ -45,7 +45,7 @@ export class ProductoForm implements OnInit {
           this.cdr.markForCheck();
         },
         error: err => {
-          this.mensaje = `Error al cargar producto (HTTP ${err?.status ?? '404'}): recurso no encontrado`;
+          this.mensaje = `Error HTTP: ${err?.status ?? 404} - Recurso no encontrado`;
           this.cdr.markForCheck();
         }
       });
@@ -75,7 +75,7 @@ export class ProductoForm implements OnInit {
       },
       error: err => {
         this.guardando = false;
-        this.mensaje = `Error al guardar en backend: HTTP ${err?.status ?? 'Fallo'}`;
+        this.mensaje = `Error HTTP: ${err?.status ?? 'Error'}`;
         this.cdr.markForCheck();
       }
     });

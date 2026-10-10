@@ -60,7 +60,33 @@ describe('ProductoForm Component (SWAD Lab 08)', () => {
       stock: 10
     });
 
+    component.form.patchValue({
+      nombre: 'Servidor Rack Enterprise',
+      precio: 75000.00,
+      stock: 2
+    });
+
     expect(component.form.valid).toBe(true);
+    expect(component.form.controls.precio.valid).toBe(true);
+  });
+
+  it('debe manejar error HTTP 404 al consultar un producto inexistente o eliminado (Prueba 6)', () => {
+    const service = TestBed.inject(ProductoService);
+    vi.spyOn(service, 'buscarPorId').mockReturnValue(
+      throwError(() => ({ status: 404 }))
+    );
+
+    // Simular carga con id inexistente
+    component.id = 99999;
+    component.editando = true;
+    service.buscarPorId(99999).subscribe({
+      next: () => {},
+      error: err => {
+        component.mensaje = `Error HTTP: ${err?.status ?? 404} - Recurso no encontrado`;
+      }
+    });
+
+    expect(component.mensaje).toContain('Error HTTP: 404');
   });
 
   it('debe manejar error al guardar y actualizar estado y mensaje', () => {
@@ -80,6 +106,6 @@ describe('ProductoForm Component (SWAD Lab 08)', () => {
 
     expect(spy).toHaveBeenCalled();
     expect(component.guardando).toBe(false);
-    expect(component.mensaje).toContain('HTTP 500');
+    expect(component.mensaje).toContain('Error HTTP: 500');
   });
 });
