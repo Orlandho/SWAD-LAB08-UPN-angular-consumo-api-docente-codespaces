@@ -145,8 +145,8 @@ npm test
 Resultado verificado:
 ```
 Test Files  4 passed (4)
-     Tests  14 passed (14)
-  Duration  4.68s
+     Tests  17 passed (17)
+  Duration  4.94s
 ```
 
 ---
