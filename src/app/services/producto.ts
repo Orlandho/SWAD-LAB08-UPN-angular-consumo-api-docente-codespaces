@@ -20,8 +20,17 @@ export class ProductoService {
   public avisoFalloDocente = signal<string | null>(null);
 
   constructor(private http: HttpClient) {
-    const guardada = typeof window !== 'undefined' ? localStorage.getItem(this.STORAGE_KEY) : null;
-    this.apiUrl = guardada || environment.apiUrl || ProductoService.DOCENTE_URL;
+    // Si en localStorage quedó guardado el backend local de una sesión o fallback previo,
+    // se limpia para asegurar que la API del docente sea la predeterminada por defecto.
+    if (typeof window !== 'undefined') {
+      const guardada = localStorage.getItem(this.STORAGE_KEY);
+      if (guardada === ProductoService.LOCAL_URL) {
+        localStorage.removeItem(this.STORAGE_KEY);
+      }
+    }
+
+    const guardadaValida = typeof window !== 'undefined' ? localStorage.getItem(this.STORAGE_KEY) : null;
+    this.apiUrl = guardadaValida || environment.apiUrl || ProductoService.DOCENTE_URL;
     if (this.apiUrl === ProductoService.LOCAL_URL) {
       this.usandoBackendLocal.set(true);
     }
@@ -40,8 +49,13 @@ export class ProductoService {
     if (limpia) {
       this.apiUrl = limpia;
       this.usandoBackendLocal.set(limpia === ProductoService.LOCAL_URL);
+      this.avisoFalloDocente.set(null);
       if (typeof window !== 'undefined') {
-        localStorage.setItem(this.STORAGE_KEY, limpia);
+        if (limpia === ProductoService.DOCENTE_URL) {
+          localStorage.removeItem(this.STORAGE_KEY);
+        } else {
+          localStorage.setItem(this.STORAGE_KEY, limpia);
+        }
       }
     }
   }
@@ -50,18 +64,17 @@ export class ProductoService {
     this.apiUrl = ProductoService.LOCAL_URL;
     this.usandoBackendLocal.set(true);
     this.avisoFalloDocente.set(motivo);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(this.STORAGE_KEY, this.apiUrl);
-    }
+    // El fallback local se activa en memoria únicamente para la sesión en ejecución.
+    // NO se persiste en localStorage para evitar quedar bloqueado en local en futuras recargas.
   }
 
   probarApiDocente(): void {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(this.STORAGE_KEY);
+    }
     this.apiUrl = ProductoService.DOCENTE_URL;
     this.usandoBackendLocal.set(false);
     this.avisoFalloDocente.set(null);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(this.STORAGE_KEY, this.apiUrl);
-    }
   }
 
   restablecerUrlPredeterminada(): void {

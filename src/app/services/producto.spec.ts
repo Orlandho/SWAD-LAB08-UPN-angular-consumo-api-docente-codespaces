@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, HttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ProductoService } from './producto';
 import { Producto } from '../models/producto';
@@ -142,4 +142,23 @@ describe('ProductoService (SWAD Lab 08)', () => {
     expect(service.avisoFalloDocente()).toBeNull();
     expect(service.getUrl()).toBe(ProductoService.DOCENTE_URL);
   });
+
+  it('activarBackendLocal() no debe persistir LOCAL_URL en localStorage para evitar quedar bloqueado en local', () => {
+    localStorage.removeItem('swad_lab08_api_url');
+    service.activarBackendLocal('Error de prueba');
+    expect(service.getUrl()).toBe(ProductoService.LOCAL_URL);
+    expect(localStorage.getItem('swad_lab08_api_url')).toBeNull();
+  });
+
+  it('constructor debe limpiar LOCAL_URL de localStorage si quedó guardado de una sesión previa', () => {
+    localStorage.setItem('swad_lab08_api_url', ProductoService.LOCAL_URL);
+    const httpClient = TestBed.inject(HttpClient);
+    const nuevoServicio = new ProductoService(httpClient);
+    expect(localStorage.getItem('swad_lab08_api_url')).toBeNull();
+    expect(nuevoServicio.getUrl()).toBe(ProductoService.DOCENTE_URL);
+    expect(nuevoServicio.usandoBackendLocal()).toBe(false);
+  });
 });
+
+
+
