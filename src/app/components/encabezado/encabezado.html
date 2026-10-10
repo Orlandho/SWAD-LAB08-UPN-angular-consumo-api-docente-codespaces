@@ -1,0 +1,20 @@
+<header class="bg-dark text-white py-3 shadow-sm border-bottom border-secondary">
+  <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <div class="d-flex align-items-center gap-3">
+      <h1 class="h4 mb-0 fw-bold">{{ titulo() }}</h1>
+      <span class="badge bg-secondary-subtle text-light border border-secondary">UPN SIST1402A &bull; Lab 08 V3</span>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <span class="badge"
+            [class.bg-primary]="totalProductos() > 0"
+            [class.bg-secondary]="totalProductos() === 0">
+        {{ totalProductos() }} productos en catálogo
+      </span>
+      @if (totalStockBajo() > 0) {
+        <span class="badge bg-danger">
+          {{ totalStockBajo() }} con stock bajo
+        </span>
+      }
+    </div>
+  </div>
+</header>

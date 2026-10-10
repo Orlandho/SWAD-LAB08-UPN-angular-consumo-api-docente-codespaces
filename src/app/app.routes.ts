@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { Catalogo } from './pages/catalogo/catalogo';
+import { Catalogo } from './components/catalogo/catalogo';
 import { ProductoForm } from './pages/producto-form/producto-form';
 
 export const routes: Routes = [

@@ -1,13 +1,22 @@
 graph TD
-    subgraph Frontend["Frontend Angular SPA (Standalone + Signals)"]
-        Navbar["Navbar Component (Configuración Dinámica de URL)"]
-        Catalogo["Catalogo Component (Listado, Búsqueda, Eliminación)"]
-        ProductoForm["ProductoForm Component (Formulario Reactivo POST/PUT)"]
-        Signals["Manejo de Estado Reactivo (Angular Signals)"]
+    subgraph Frontend["Frontend Angular 22 SPA (Standalone + Signals)"]
+        AppRoot["App Component (Shell Raíz)"]
+        Navbar["Navbar Component (Conmutador Dinámico de API)"]
+        Encabezado["Encabezado Component (Contador de Productos y Badges)"]
+        RouterOutlet["Router Outlet (Enrutamiento Declarativo)"]
+        Catalogo["Catalogo Component (components/catalogo - Listado, Búsqueda, DELETE)"]
+        ProductoForm["ProductoForm Component (pages/producto-form - Reactive Forms POST/PUT)"]
+        Signals["Estado Reactivo Local (Angular Signals: productos, cargando, error)"]
         DataService["ProductoService (Capa Centralizada de Acceso a Datos)"]
         Interceptor["authInterceptor (HttpInterceptorFn / Bearer JWT)"]
         HttpClient["HttpClient Module (RxJS Observables)"]
 
+        AppRoot --> Navbar
+        AppRoot --> Encabezado
+        AppRoot --> RouterOutlet
+        RouterOutlet -->|/productos| Catalogo
+        RouterOutlet -->|/productos/nuevo| ProductoForm
+        RouterOutlet -->|/productos/editar/:id| ProductoForm
         Catalogo --> Signals
         Catalogo --> DataService
         ProductoForm --> DataService
@@ -15,13 +24,15 @@ graph TD
         Interceptor --> HttpClient
     end
 
-    subgraph Backend["Backend RESTful (Spring Boot 3.4.3)"]
+    subgraph Backend["Backend RESTful Docente (GitHub Codespaces - Puerto 8080)"]
+        CORS["Filtro CORS (allowedOriginPatterns: https://*.app.github.dev)"]
         Gateway["Controlador REST (/api/productos)"]
-        Service["ProductoService (Lógica de Negocio y Métricas)"]
+        Service["ProductoService (Lógica de Negocio y Métricas de Stock)"]
         Repo["ProductoRepository (Spring Data JPA)"]
-        DB[("MySQL 8 Database")]
+        DB[("MySQL 8 Database (Docente)")]
 
-        HttpClient -->|Peticiones HTTP/JSON| Gateway
+        HttpClient -->|Peticiones HTTP/JSON| CORS
+        CORS --> Gateway
         Gateway --> Service
         Service --> Repo
         Repo --> DB

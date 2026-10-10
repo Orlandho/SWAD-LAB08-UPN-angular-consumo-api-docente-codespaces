@@ -1,11 +1,14 @@
 <div class="d-flex flex-column min-vh-100 bg-light">
   <app-navbar></app-navbar>
+  <app-encabezado
+    titulo="Catálogo de productos"
+    [totalProductos]="totalProductos" />
   <main class="flex-grow-1">
     <router-outlet></router-outlet>
   </main>
   <footer class="bg-white border-top py-3 text-center text-muted small mt-auto">
     <div class="container">
-      UPN SIST1402A &bull; Soluciones Web y Aplicaciones Distribuidas &bull; Laboratorio 08
+      UPN SIST1402A &bull; Soluciones Web y Aplicaciones Distribuidas &bull; Laboratorio 08 (V3 Corregido)
     </div>
   </footer>
 </div>

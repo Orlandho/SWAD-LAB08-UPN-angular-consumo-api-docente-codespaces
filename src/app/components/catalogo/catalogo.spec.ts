@@ -7,7 +7,7 @@ import { Catalogo } from './catalogo';
 import { ProductoService } from '../../services/producto';
 import { Producto } from '../../models/producto';
 
-describe('Catalogo Component (SWAD Lab 08)', () => {
+describe('Catalogo Component (SWAD Lab 08 V3)', () => {
   let component: Catalogo;
   let fixture: ComponentFixture<Catalogo>;
   let productoService: ProductoService;
