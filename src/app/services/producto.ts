@@ -24,7 +24,12 @@ export class ProductoService {
     // se limpia para asegurar que la API del docente sea la predeterminada por defecto.
     if (typeof window !== 'undefined') {
       const guardada = localStorage.getItem(this.STORAGE_KEY);
-      if (guardada === ProductoService.LOCAL_URL) {
+      if (
+        guardada &&
+        (guardada.includes('localhost') ||
+          guardada.includes('127.0.0.1') ||
+          guardada === ProductoService.LOCAL_URL)
+      ) {
         localStorage.removeItem(this.STORAGE_KEY);
       }
     }

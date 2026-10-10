@@ -158,6 +158,26 @@ describe('ProductoService (SWAD Lab 08)', () => {
     expect(nuevoServicio.getUrl()).toBe(ProductoService.DOCENTE_URL);
     expect(nuevoServicio.usandoBackendLocal()).toBe(false);
   });
+
+  it('constructor debe limpiar cualquier variante de localhost o 127.0.0.1 de localStorage', () => {
+    localStorage.setItem('swad_lab08_api_url', 'http://127.0.0.1:8080/api/productos');
+    const httpClient = TestBed.inject(HttpClient);
+    const nuevoServicio = new ProductoService(httpClient);
+    expect(localStorage.getItem('swad_lab08_api_url')).toBeNull();
+    expect(nuevoServicio.getUrl()).toBe(ProductoService.DOCENTE_URL);
+  });
+
+  it('listar() debe consultar limpiamente la API docente sin advertencias ni activar fallback si responde exitosamente', () => {
+    service.probarApiDocente();
+    service.listar().subscribe(productos => {
+      expect(productos.length).toBe(2);
+      expect(service.usandoBackendLocal()).toBe(false);
+      expect(service.avisoFalloDocente()).toBeNull();
+    });
+
+    const reqDocente = httpTesting.expectOne(ProductoService.DOCENTE_URL);
+    reqDocente.flush(mockProductos);
+  });
 });
 
 
