@@ -114,4 +114,32 @@ describe('ProductoService (SWAD Lab 08)', () => {
     expect(localStorage.getItem('swad_lab08_api_url')).toBeNull();
     expect(service.getUrl()).toBe(ProductoService.DOCENTE_URL);
   });
+
+  it('listar() debe activar automaticamente el backend local y registrar aviso si la API docente falla por CORS/error de red', () => {
+    service.probarApiDocente();
+    service.listar().subscribe(productos => {
+      expect(productos.length).toBe(2);
+      expect(service.usandoBackendLocal()).toBe(true);
+      expect(service.avisoFalloDocente()).toContain('La API del profesor en GitHub Codespaces no responde');
+    });
+
+    // Petición inicial a URL docente falla por CORS (status 0)
+    const reqDocente = httpTesting.expectOne(ProductoService.DOCENTE_URL);
+    reqDocente.error(new ProgressEvent('error'), { status: 0, statusText: 'Unknown Error' });
+
+    // Fallback automático solicita datos al backend local
+    const reqLocal = httpTesting.expectOne(ProductoService.LOCAL_URL);
+    reqLocal.flush(mockProductos);
+  });
+
+  it('probarApiDocente() debe restaurar la URL oficial del docente y limpiar avisos de fallo', () => {
+    service.activarBackendLocal('API docente inaccesible');
+    expect(service.usandoBackendLocal()).toBe(true);
+    expect(service.avisoFalloDocente()).toBeTruthy();
+
+    service.probarApiDocente();
+    expect(service.usandoBackendLocal()).toBe(false);
+    expect(service.avisoFalloDocente()).toBeNull();
+    expect(service.getUrl()).toBe(ProductoService.DOCENTE_URL);
+  });
 });
