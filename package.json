@@ -1,7 +1,7 @@
 {
-  "name": "swad-lab08-angular-product-service-crud-rest",
+  "name": "swad-lab08-upn-angular-consumo-api-docente-codespaces",
   "version": "1.0.0",
-  "description": "Enterprise Angular SPA with HttpClient, Data Service, CRUD Reactive Forms and Spring Boot REST API integration",
+  "description": "Enterprise Angular SPA para consumo de API REST del docente (Codespaces) con HttpClient, Data Service, Signals y CRUD Reactive Forms",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

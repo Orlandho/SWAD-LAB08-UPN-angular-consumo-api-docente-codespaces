@@ -2,11 +2,12 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "e9d47f4b-b5cc-4cf4-80b3-4f7d0df44ccd"
   },
   "newProjectRoot": "projects",
   "projects": {
-    "SWAD-LAB08-angular-product-service-crud-rest": {
+    "SWAD-LAB08-UPN-angular-consumo-api-docente-codespaces": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -65,10 +66,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "SWAD-LAB08-angular-product-service-crud-rest:build:production"
+              "buildTarget": "SWAD-LAB08-UPN-angular-consumo-api-docente-codespaces:build:production"
             },
             "development": {
-              "buildTarget": "SWAD-LAB08-angular-product-service-crud-rest:build:development"
+              "buildTarget": "SWAD-LAB08-UPN-angular-consumo-api-docente-codespaces:build:development"
             }
           },
           "defaultConfiguration": "development"

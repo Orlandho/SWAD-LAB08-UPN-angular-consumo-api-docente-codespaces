@@ -1,12 +1,12 @@
-# Enterprise Angular SPA Architecture - HttpClient, Data Service, Signals and Spring Boot Integration (Lab 08)
+# SWAD LAB08: SPA Angular de Consumo de API REST del Docente (GitHub Codespaces)
 
 [![Angular](https://img.shields.io/badge/Angular-22.2-dd0031?style=for-the-badge&logo=angular)](https://angular.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-6.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952b3?style=for-the-badge&logo=bootstrap)](https://getbootstrap.com/)
 [![Vitest](https://img.shields.io/badge/Vitest-5.0-6e9f18?style=for-the-badge&logo=vitest)](https://vitest.dev/)
-[![Spring Boot](https://img.shields.io/badge/Backend-Spring%20Boot%203-brightgreen?style=for-the-badge&logo=springboot)](https://spring.io/projects/spring-boot)
+[![Spring Boot](https://img.shields.io/badge/Backend-Codespaces%20API%20Docente-brightgreen?style=for-the-badge&logo=springboot)](https://spring.io/projects/spring-boot)
 
-> Repositorio de portafolio profesional desarrollado para la asignatura Soluciones Web y Aplicaciones Distribuidas (Semana 08 - Laboratorio 08) en la Universidad Privada del Norte (UPN). Implementa una aplicacion de pagina unica (Single Page Application - SPA) de alta fidelidad que consume servicios RESTful de backend desarrollados en Spring Boot, estructurada mediante el patron Data Service con `ProductoService`, gestion reactiva de estado con Angular Signals, enrutamiento desacoplado con parametros de ruta y Query Params, formularios reactivos con validacion rigurosa e interceptor HTTP funcional para autenticacion Bearer.
+> Repositorio de portafolio profesional desarrollado para la asignatura Soluciones Web y Aplicaciones Distribuidas (Semana 08 - Laboratorio 08) en la Universidad Privada del Norte (UPN). Implementa una aplicación de página única (Single Page Application - SPA) reactiva y tipada en Angular que consume directamente la **API REST del docente alojada en GitHub Codespaces** (`https://glorious-spork-747q6qvw9g4hr5x7-8080.app.github.dev/api/productos`), estructurada mediante el patrón Data Service con `ProductoService`, gestión reactiva de estado con Angular Signals, enrutamiento desacoplado con parámetros de ruta y Query Params, formularios reactivos con validación rigurosa e interceptor HTTP funcional para autenticación Bearer.
 
 ---
 
@@ -85,7 +85,7 @@ graph TD
 ## 5. Estructura del Proyecto
 
 ```
-SWAD-LAB08-angular-product-service-crud-rest/
+SWAD-LAB08-UPN-angular-consumo-api-docente-codespaces/
 ├── mermaid diagramas/
 │   ├── arquitectura.mmd              # Codigo fuente del diagrama de componentes
 │   └── arquitectura.svg              # Diagrama compilado en formato vectorial SVG
